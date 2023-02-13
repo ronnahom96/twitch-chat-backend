@@ -1,5 +1,11 @@
 {
   "server": {
     "port": 4000
+  },
+  "db": {
+    "connectionUrl": "mongodb+srv://ronh:102030@cluster0.ufp673v.mongodb.net/?retryWrites=true&w=majority",
+    "username": "",
+    "password": "",
+    "dbName": ""
   }
 }

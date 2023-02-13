@@ -1,44 +1,22 @@
 import express from 'express';
-import socketio, { Server } from 'socket.io';
-import http from 'http';
+import config from 'config';
+import { DEFAULT_SERVER_PORT } from './common/constants';
 
-const app = express();
-const server = http.createServer(app);
+async function startServer() {
+    const app = express();
+    const port: number = config.get<number>('server.port') || DEFAULT_SERVER_PORT;
+    await require('./loaders').default(app);
 
-interface ServerToClientEvents {
-  notifyMessage: (message: Message) => void;
+    app.listen(port, () => {
+        console.info(`
+      ################################################
+      🛡️  Server listening on port: ${port} 🛡️
+      ################################################
+    `);
+    }).on('error', err => {
+        console.error(err);
+        process.exit(1);
+    });
 }
 
-interface ClientToServerEvents {
-  sendMessage: (message: Message) => void;
-}
-
-interface InterServerEvents {
-  ping: () => void;
-}
-
-interface Message {
-  author: string;
-  text: string;
-}
-
-const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, Message>(server);
-
-io.on('connection', (socket: socketio.Socket) => {
-  console.log(`A new user has connected: ${socket.id}`);
-
-  socket.on('sendMessage', (message: Message) => {
-    console.log(message);
-    console.log(`Received message: ${message.text}`);
-    io.emit('notifyMessage', message);
-  });
-
-  socket.on('disconnect', () => {
-    console.log(`User has disconnected: ${socket.id}`);
-  });
-});
-
-const PORT = process.env.PORT || 4000;
-server.listen(PORT, () => console.log(`Server is listening on port ${PORT}`));
-
-export default server;
+startServer();
