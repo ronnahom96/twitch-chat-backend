@@ -7,9 +7,9 @@ import { DEFAULT_SERVER_PORT } from './common/constants';
 async function startServer() {
     const app = express();
     const port: number = config.get<number>('server.port') || DEFAULT_SERVER_PORT;
-    await require('./loaders').default(app);
+    const server = await require('./loaders').default(app);
 
-    app.listen(port, () => {
+    server.listen(port, () => {
         console.info(`
       ################################################
       🛡️  Server listening on port: ${port} 🛡️
@@ -21,4 +21,5 @@ async function startServer() {
     });
 }
 
+// console.log(1)
 startServer();

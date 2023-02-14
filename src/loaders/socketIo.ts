@@ -1,8 +1,7 @@
-import { Express } from 'express';
+import express, { Express } from 'express';
 import http from 'http';
 import socketio, { Server } from 'socket.io';
-import { Message } from '../interfaces/Message';
-
+import { Message } from '../interfaces/message';
 
 interface ServerToClientEvents {
     notifyMessage: (message: Message) => void;
@@ -33,6 +32,8 @@ export default async (app: Express) => {
             console.log(`User has disconnected: ${socket.id}`);
         });
     });
+
+    return server;
 };
 
 

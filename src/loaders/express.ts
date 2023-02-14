@@ -10,5 +10,5 @@ export default ({ app }: { app: Application }) => {
         res.status(200).end();
     });
 
-    app.use("api/v1", routes());
+    // app.use("api/v1", routes());
 };

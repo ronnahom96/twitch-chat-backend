@@ -11,7 +11,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "build": "tsc",
-    "start": "node dist"
+    "start": "yarn run build & node ./dist"
   },
   "author": "Ron Nachum",
   "license": "ISC",
