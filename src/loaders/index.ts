@@ -7,13 +7,13 @@ import dependencyInjectorLoader from './dependencyInjector';
 const dbConfig = config.get<DbConfig>('db');;
 
 export default async (expressApp: Express) => {
-    // await mongoDbLoader(dbConfig);
+    const dataSource = await mongoDbLoader(dbConfig);
     console.info('✌️ DB loaded and connected!');
 
     const server = await socketIoLoader(expressApp);
     console.info('✌️ Socket Io loaded and connected!');
 
-    // dependencyInjectorLoader()
+    dependencyInjectorLoader(dataSource)
     console.info('✌️ Dependency Injector loaded');
 
     return server;

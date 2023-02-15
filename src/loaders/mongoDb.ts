@@ -18,7 +18,7 @@ export default async (dbConfig: DbConfig): Promise<DataSource> => {
         type: "mongodb",
         url: dbConfig.connectionUrl,
         useUnifiedTopology: true,
-        synchronize: true,
+        synchronize: false,
         entities: [Message],
         subscribers: [],
         migrations: [],
